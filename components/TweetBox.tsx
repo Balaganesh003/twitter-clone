@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   CalendarIcon,
   EmojiHappyIcon,
   LocationMarkerIcon,
   PhotographIcon,
   SearchCircleIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/outline'
+import { useSession } from 'next-auth/react'
 
 const TweetBox = () => {
-  const [tweetMessage, setTweetMessage] = useState<string>('');
+  const [tweetMessage, setTweetMessage] = useState<string>('')
+  const { data: session } = useSession()
 
   return (
     <div className="flex space-x-2 p-5">
       <img
         className="h-14 w-14 rounded-full object-cover mt-4"
-        src="https://links.papareact.com/gll"
+        src={session?.user?.image || 'https://links.papareact.com/gll'}
         alt="profile"
       />
       <div className="flex flex-1 pl-2">
@@ -43,7 +45,7 @@ const TweetBox = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TweetBox;
+export default TweetBox
