@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sanityClient } from '../../sanity';
-import { Tweet, TweetBody } from '../../typings';
-import { groq } from 'next-sanity';
+import { TweetBody } from '../../typings';
 
 type Data = {
   message: string;

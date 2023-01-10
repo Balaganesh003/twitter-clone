@@ -46,16 +46,18 @@ const Tweet = ({ tweet }: Props) => {
     console.log(result);
     setCommentText('');
     setCommentBoxVisible(false);
+    refreshComments();
   };
 
-  const HandelCommentSubmit = async (
+  const handleCommentSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    toast.loading('Posting Comment...');
+    if (!commentText) return;
+    const toastComment = toast.loading('Posting comment...');
     postComment();
     refreshComments();
-    toast.success('Comment Posted!');
+    toast.success('Comment Posted!!', { id: toastComment });
   };
 
   return (
@@ -119,15 +121,14 @@ const Tweet = ({ tweet }: Props) => {
         {commentBoxVisible && (
           <form className="mt-3 ml-[2.5rem] flex space-x-3">
             <input
-              value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               className="flex-1 p-2 outline-none rounded-lg bg-gray-100"
               type="text"
               placeholder="write a comment..."
             />
             <button
+              onClick={handleCommentSubmit}
               disabled={!commentText}
-              onClick={HandelCommentSubmit}
               className="text-twitter disabled:text-gray-300"
               type="submit">
               Add Comment
