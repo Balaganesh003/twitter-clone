@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Tweet } from '../typings'
-import TimeAgo from 'react-timeago'
+import React, { useState, useEffect } from 'react';
+import { Tweet } from '../typings';
+import TimeAgo from 'react-timeago';
 import {
   ChatAlt2Icon,
   HeartIcon,
   SwitchHorizontalIcon,
   UploadIcon,
-} from '@heroicons/react/outline'
-import { fetchComments } from '../utils/fetchComments'
-import { Comment } from '../typings'
+} from '@heroicons/react/outline';
+import { fetchComments } from '../utils/fetchComments';
+import { Comment } from '../typings';
 
 interface Props {
-  tweet: Tweet
+  tweet: Tweet;
 }
 
 const Tweet = ({ tweet }: Props) => {
-  const [comments, setComments] = useState<Comment[]>([])
+  const [comments, setComments] = useState<Comment[]>([]);
   const refreshComments = async () => {
-    const comments = await fetchComments(tweet._id)
-    setComments(comments)
-  }
+    console.log(tweet);
+    // const comments = await fetchComments(tweet._id);
+    // setComments(comments);
+  };
 
   useEffect(() => {
-    refreshComments()
-  }, [])
+    refreshComments();
+  }, []);
 
   return (
     <div className="flex flex-col space-x-3 border-y p-5 border-gray-100">
@@ -102,7 +103,7 @@ const Tweet = ({ tweet }: Props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Tweet
+export default Tweet;

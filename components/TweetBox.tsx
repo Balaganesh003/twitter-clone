@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, SetStateAction, Dispatch } from 'react'
 import {
   CalendarIcon,
   EmojiHappyIcon,
@@ -7,8 +7,15 @@ import {
   SearchCircleIcon,
 } from '@heroicons/react/outline'
 import { useSession } from 'next-auth/react'
+import { Tweet, TweetBody } from '../typings'
+import { fetchTweets } from '../utils/fetchTweets'
+import { toast } from 'react-hot-toast'
 
-const TweetBox = () => {
+interface props {
+  setTweets: Dispatch<SetStateAction<Tweet[]>>
+}
+
+const TweetBox = ({ setTweets }: props) => {
   const [tweetMessage, setTweetMessage] = useState<string>('')
   const { data: session } = useSession()
 
@@ -24,6 +31,37 @@ const TweetBox = () => {
     if (!imageInputRef.current?.value) return
     setImage(imageInputRef.current.value)
     imageInputRef.current.value = ''
+    setImageUrlBoxIsOpen(false)
+  }
+
+  const postTweet = async () => {
+    const tweetInfo: TweetBody = {
+      text: tweetMessage,
+      username: session?.user?.name || 'Unknown User',
+      profileImg: session?.user?.image || 'https://links.papareact.com/gll',
+      image: image,
+    }
+    const result = await fetch('/api/addTweet', {
+      body: JSON.stringify(tweetInfo),
+      method: 'POST',
+    })
+
+    const json = await result.json()
+
+    const newTweets = await fetchTweets()
+    setTweets(newTweets)
+
+    toast.success('Tweet Posted!')
+    return json
+  }
+
+  const handelSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault()
+    postTweet()
+    setTweetMessage('')
+    setImage('')
     setImageUrlBoxIsOpen(false)
   }
 
@@ -56,6 +94,7 @@ const TweetBox = () => {
 
             <button
               disabled={!tweetMessage || !session}
+              onClick={handelSubmit}
               className="bg-twitter px-5 py-2 rounded-full font-bold text-white disabled:opacity-40">
               Tweet
             </button>
