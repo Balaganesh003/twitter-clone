@@ -21,7 +21,7 @@ const Feed = ({ tweets: tweetsProp }: Props) => {
   };
 
   return (
-    <div className="lg:col-span-5 col-span-7 border-x overflow-y-scroll">
+    <div className="lg:col-span-5 max-h-screen scrollbar-hide col-span-7 border-x overflow-y-scroll">
       <div className="flex items-center justify-between">
         <h1 className="p-5 pb-0 font-semibold text-xl">Home</h1>
         <RefreshIcon
