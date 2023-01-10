@@ -1,15 +1,4 @@
-import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton,
-} from 'react-twitter-embed';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 import { SearchIcon } from '@heroicons/react/outline';
 import React from 'react';

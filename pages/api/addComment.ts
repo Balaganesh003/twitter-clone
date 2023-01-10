@@ -1,4 +1,3 @@
-import { create } from 'domain';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { CommentBody } from '../../typings';
 
